@@ -1,0 +1,45 @@
+<!-- based on tutorial by Red Stapler, https://www.youtube.com/watch?v=2-tnkzG0sKU -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="plotly-latest.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <nav>Realtime Plotly.js Chart</nav>
+        <section class="main">
+            <div id="chart"></div>
+        </section>
+
+        <script>
+
+            function getData() {
+                return Math.random();
+            }
+
+            Plotly.plot('chart', [{
+                y:[getData()],
+                type:'line'
+            }]);
+
+            var counter = 0;
+
+            setInterval( function(){
+                Plotly.extendTraces('chart', {
+                    y:[[getData()]]
+                },[0]);
+
+                counter++;
+
+                if(counter > 100) {
+                    Plotly.relayout('chart', {
+                        xaxis: {
+                            range: [counter-100, counter]
+                        }
+                    });
+                }
+            }, 200);
+
+        </script>
+    </body>
+</html>
